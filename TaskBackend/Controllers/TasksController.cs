@@ -44,5 +44,23 @@ namespace TaskBackend.Controllers
             return Ok(task);
 
         }
+
+
+        // Tehtävän poistaminen id:llä
+        // polku: "https://jotain.com/api/tasks/7"
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var task = db.Tasks.Find(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            db.Tasks.Remove(task);
+            db.SaveChanges();
+            return Ok("Deleted task with id: " + id);
+
+        }
     }
 }
