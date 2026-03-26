@@ -60,7 +60,37 @@ namespace TaskBackend.Controllers
             db.Tasks.Remove(task);
             db.SaveChanges();
             return Ok("Deleted task with id: " + id);
-
         }
+
+
+        // Metodi , joka hakee tehtävät tietyn statuksen mukaan
+        // polku: "https://jotain.com/api/tasks/status/2"
+        [HttpGet]
+        [Route("status/{status}")]
+        public IActionResult GetByStatus(int status)
+        {
+            // hyväksytään vain status 1, 2 tai 3
+            // muuten palautetaan BadRequest
+            if (status < 1 || status > 3)
+            {
+                return BadRequest("Status must be 1, 2 or 3");
+            }
+
+            var tasks = db.Tasks.Where(t => t.Status == status);
+            return Ok(tasks);
+        }
+
+
+        // Hae tehtäviä titlen mukaan hakusanalla esim. "kirjaut"
+        [HttpGet]
+        [Route("title/{search}")]
+        public IActionResult GetByTitle(string search)
+        {
+            var tasks = db.Tasks.Where(t => t.Title.Contains(search));
+            //var tasks = db.Tasks.Where(t => t.Title == search); <-- perfect match.
+       
+            return Ok(tasks);
+        }
+
     }
 }
