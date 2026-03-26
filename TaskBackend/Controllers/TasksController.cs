@@ -93,8 +93,9 @@ namespace TaskBackend.Controllers
         }
 
 
+        // Perjantaiksi 27.3.
         // Tähän voisi tehdä muokkausmetodeja PUT tai PATCH.
-        // Esim että voi muuttaa tehtävän statusta.
+        // Esim että voi muuttaa tehtävän statusta tai muita tietoja.
 
     }
 }
