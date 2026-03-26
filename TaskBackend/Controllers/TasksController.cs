@@ -92,5 +92,9 @@ namespace TaskBackend.Controllers
             return Ok(tasks);
         }
 
+
+        // Tähän voisi tehdä muokkausmetodeja PUT tai PATCH.
+        // Esim että voi muuttaa tehtävän statusta.
+
     }
 }
