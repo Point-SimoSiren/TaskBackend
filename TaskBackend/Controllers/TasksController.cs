@@ -24,6 +24,7 @@ namespace TaskBackend.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Task task)
         {
+            Console.WriteLine("Received new task: " + task.Title);
             db.Tasks.Add(task);
             db.SaveChanges();
 
@@ -93,9 +94,28 @@ namespace TaskBackend.Controllers
         }
 
 
-        // Perjantaiksi 27.3.
-        // Tähän voisi tehdä muokkausmetodeja PUT tai PATCH.
-        // Esim että voi muuttaa tehtävän statusta tai muita tietoja.
+        // Status tiedon päivittäminen 
+        // polku: "https://jotain.com/api/tasks/update-status/123"
+        [HttpPatch]
+        [Route("update-status/{id}")]
+        public IActionResult Patch(int id, [FromBody] int newStatus)
+        {
+            var task = db.Tasks.Find(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            if (newStatus < 1 || newStatus > 3)
+            {
+                return BadRequest("Status must be 1, 2 or 3");
+            }
+            task.Status = newStatus;
+            db.SaveChanges();
+            return Ok("Updated status of task with id: " + id + " to " + newStatus);
 
-    }
+        }
+
+
+
+        }
 }
