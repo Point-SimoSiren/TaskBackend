@@ -105,13 +105,11 @@ namespace TaskBackend.Controllers
             {
                 return NotFound();
             }
-            if (newStatus < 1 || newStatus > 3)
-            {
-                return BadRequest("Status must be 1, 2 or 3");
-            }
+         
             task.Status = newStatus;
+            task.StatusChanged = DateTime.UtcNow.AddHours(1);
             db.SaveChanges();
-            return Ok("Updated status of task with id: " + id + " to " + newStatus);
+            return Ok();
 
         }
 
